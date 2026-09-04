@@ -135,7 +135,12 @@ rec {
     baseModules = defaultSystem.partitioningModules ++ [
       {
         securix = {
-          self.mainDisk = "/dev/nvme0n1";
+          self = {
+            mainDisk = "/dev/nvme0n1";
+            # required by modules/self.nix, pulled in via partitioningModules
+            edition = defaultEdition;
+            machine.inventoryId = 0;
+          };
           filesystems.layout = "office_v1";
         };
       }
